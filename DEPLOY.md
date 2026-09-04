@@ -1,63 +1,57 @@
-# GitHub Pages deploy — BUILD FIX
+# GitHub Pages — 404 FIX
 
-## Hata (senin log)
+## Yanlis URL
 
 ```
-No such file or directory @ dir_chdir0 - /github/workspace/docs
-Configuration file: none
-Theme: jekyll-theme-primer
-Source: ./docs
+https://heimdalmarketing.github.io/escort/index.md   ← 404 (Pages .md sunmaz)
 ```
 
-**Sebep:** Pages `/docs` klasorunden Jekyll build ediyor; tema SCSS `docs` path'inde patliyor.
-Ayrica remote'da `_config.yml` yok gibi (`Configuration file: none`).
+## Dogru URL
 
-## Cozum (onerilen) — repo KOKU
+```
+https://heimdalmarketing.github.io/escort/
+https://heimdalmarketing.github.io/escort/index.html
+https://heimdalmarketing.github.io/escort/sites.html
+```
 
-1. `escort` repo'sunda **Settings → Pages**:
-   - Source: **GitHub Actions** (asagidaki workflow)
-   - veya Branch: `main` → Folder: **`/` (root)** — `/docs` DEGIL
+## Ne yapmalisin (escort reposu)
 
-2. Eski `/docs` icerigini sil veya bosalt; dosyalari **repo kokune** koy:
+1. Bu klasordeki dosyalari **repo kokune** koy (docs/ DEGIL):
+
+```text
+index.html          ← ZORUNLU
+.nojekyll           ← ZORUNLU (Jekyll kapali)
+sites.html
+bonus-hub.html
+*.html (tum sayfalar)
+.github/workflows/pages.yml
+```
+
+2. Settings → Pages:
+   - Source: **GitHub Actions**
+   - veya Branch `main` → Folder **`/` (root)**
+
+3. Push:
 
 ```bash
-# Lokal paket:
-cd parasite-seo/github
-
-# escort repo klasorunde (ornek):
-cp _config.yml index.md sites.md bonus-*.md escort-*.md \
-   beylikduzu.md sariyer.md sisli.md kocaeli.md yalova.md \
-   izmir-alsancak.md ankara-kizilay.md diyarbakir.md mersin.md \
-   antalya.md bursa.md \
-   /path/to/escort/
-
-mkdir -p /path/to/escort/.github/workflows
-cp .github/workflows/pages.yml /path/to/escort/.github/workflows/
-
 cd /path/to/escort
+# parasite-seo/github/ icinden kopyala:
+# index.html .nojekyll sites.html bonus-*.html escort-*.html beylikduzu.html ... 
+# .github/workflows/pages.yml
+
 git add -A
-git commit -m "Fix Pages: build from root, not docs"
+git commit -m "Static Pages: index.html + .nojekyll"
 git push
 ```
 
-3. Actions sekmesinde workflow yesil olmali.
-4. Site: `https://KULLANICI.github.io/escort/`
+4. 1-2 dk bekle → ac:
 
-## Alternatif — Jekyll kapali (en basit)
+**https://heimdalmarketing.github.io/escort/**
 
-Repo kokune bos dosya:
+## Hizli test
 
-```
-.nojekyll
-```
+Kokte su iki dosya olmali:
+- `index.html`
+- `.nojekyll`
 
-Sonra Settings → Pages → Branch `main` → `/` (root).
-
-Markdown HTML'e cevrilmez; ham `.md` gorunur. Backlink icin yine de calisir (Google linkleri tarar). Index icin `index.html` ekle (asagida).
-
-## Domain listesi (backlink)
-
-Escort: istanbullescort.devs.surf · ankaraescort.devs.surf · escort.scz.it.com  
-Bonus: denemebonus.fit · eniyibonuslar.us.com · guncelgirisler.com · heimdal.us.com · purplepeakadventures.com · scz.it.com · selas.eu.com · wds.it.com · wsd.ae.org
-
-Hub: `index.md` · `sites.md` · `bonus-hub.md`
+Yoksa 404 alirsin.
