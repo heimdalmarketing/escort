@@ -1,0 +1,31 @@
+# GitHub Pages — repo KOKUNDEN build et (/docs KULLANMA)
+# /docs + jekyll theme SCSS hatasi: dir_chdir0 docs ENOENT
+
+title: Rehberler ve Guncel Listeler 2026
+description: Escort rehberleri ve deneme bonusu / guncel giris listeleri
+markdown: GFM
+
+# Tema SCSS /docs altinda patliyor — remote_theme kullan
+remote_theme: pages-themes/cayman@v0.2.0
+
+plugins:
+  - jekyll-remote-theme
+  - jekyll-relative-links
+  - jekyll-optional-front-matter
+  - jekyll-readme-index
+  - jekyll-default-layout
+  - jekyll-titles-from-headings
+  - jekyll-seo-tag
+
+relative_links:
+  enabled: true
+  collections: true
+
+optional_front_matter:
+  remove_originals: false
+
+exclude:
+  - DEPLOY.md
+  - README.md
+  - docs
+  - .github
